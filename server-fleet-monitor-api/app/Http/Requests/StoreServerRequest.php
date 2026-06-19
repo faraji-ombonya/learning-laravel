@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\OSType;
+use App\Enums\ServerEnvironment;
 
 class StoreServerRequest extends FormRequest
 {
@@ -25,8 +28,8 @@ class StoreServerRequest extends FormRequest
         return [
             'hostname' => ['required', 'max:255'],
             'ip_address' => ['required', 'ip'],
-            'environment' => ['required', 'max:50'],
-            'os_type' => ['required', 'max:50'],
+            'environment' => ['required', 'max:50', Rule::enum(ServerEnvironment::class)],
+            'os_type' => ['required', 'max:50', Rule::enum(OSType::class)],
             'description' => ['required', 'max:255'],
         ];
     }

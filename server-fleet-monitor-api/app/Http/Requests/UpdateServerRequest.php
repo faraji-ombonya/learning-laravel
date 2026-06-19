@@ -4,6 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use App\Enums\ServerEnvironment;
+use App\Enums\OSType;
 
 class UpdateServerRequest extends FormRequest
 {
@@ -25,8 +28,8 @@ class UpdateServerRequest extends FormRequest
         return [
             'hostname' => ['sometimes', 'max:255'],
             'ip_address' => ['sometimes', 'ip'],
-            'environment' => ['sometimes', 'max:50'],
-            'os_type' => ['sometimes', 'max:50'],
+            'environment' => ['sometimes', 'max:50', Rule::enum(ServerEnvironment::class)],
+            'os_type' => ['sometimes', 'max:50', Rule::enum(OSType::class)],
             'description' => ['sometimes', 'max:255'],
         ];
     }

@@ -9,4 +9,13 @@ class Server extends Model
 {
     /** @use HasFactory<\Database\Factories\ServerFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'hostname',
+        'ip_address',
+        'environment',
+        'os_type',
+        'description',
+        'status',
+    ];
 }

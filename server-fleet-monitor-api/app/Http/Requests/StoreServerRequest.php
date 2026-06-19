@@ -23,7 +23,11 @@ class StoreServerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'hostname' => ['required', 'max:255'],
+            'ip_address' => ['required'],
+            'environment' => ['required', 'max:50'],
+            'os_type' => ['required', 'max:50'],
+            'description' => ['required', 'max:255'],
         ];
     }
 }

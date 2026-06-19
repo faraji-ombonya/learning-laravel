@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('servers', function (Blueprint $table) {
             $table->id();
+            $table->string("hostname", length: 255);
+            $table->ipAddress("ip_address");
+            $table->string("environment", length: 50);
+            $table->string("os_type", length: 50);
+            $table->string("description", length: 255);
+            $table->string("status", length: 50);
             $table->timestamps();
         });
     }

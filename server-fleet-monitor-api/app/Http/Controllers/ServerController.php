@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreServerRequest;
 use App\Http\Requests\UpdateServerRequest;
+use App\Http\Resources\ServerResource;
 use App\Models\Server;
 
 class ServerController extends Controller
@@ -13,7 +14,8 @@ class ServerController extends Controller
      */
     public function index()
     {
-        //
+        $servers = Server::all();
+        return ServerResource::collection($servers);
     }
 
     /**
@@ -29,7 +31,8 @@ class ServerController extends Controller
      */
     public function store(StoreServerRequest $request)
     {
-        //
+        $validated = $request->validated();
+        
     }
 
     /**

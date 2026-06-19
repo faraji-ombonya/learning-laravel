@@ -4,18 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreServerRequest;
 use App\Http\Requests\UpdateServerRequest;
-use App\Http\Resources\ServerResource;
 use App\Models\Server;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Http\Request;
 
 class ServerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $servers = Server::all();
-        return ServerResource::collection($servers);
+        $perPage = min($request->input("per_page", 15), 60);
+        $status = $request->input("status");
+        $environment = $request->input("environment");
+
+        return Server::when($status, function ($query, string $status) {
+                $query->where('status', $status);
+            })
+            ->when($environment, function ($query, string $environment) {
+                $query->where('environment', $environment);
+            })
+            ->paginate($perPage)->toResourceCollection();
     }
 
     /**
@@ -24,7 +34,7 @@ class ServerController extends Controller
     public function store(StoreServerRequest $request)
     {
         $server = Server::create($request->validated());
-        return new ServerResource($server);
+        return $server->toResource();
     }
 
     /**
@@ -32,7 +42,7 @@ class ServerController extends Controller
      */
     public function show(Server $server)
     {
-        return new ServerResource($server);
+        return $server->toResource();
     }
 
     /**
@@ -41,7 +51,7 @@ class ServerController extends Controller
     public function update(UpdateServerRequest $request, Server $server)
     {
         $server->updateOrFail($request->validated());
-        return new ServerResource($server);
+        return $server->toResource();
     }
 
     /**

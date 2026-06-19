@@ -24,7 +24,7 @@ class StoreServerRequest extends FormRequest
     {
         return [
             'hostname' => ['required', 'max:255'],
-            'ip_address' => ['required'],
+            'ip_address' => ['required', 'ip'],
             'environment' => ['required', 'max:50'],
             'os_type' => ['required', 'max:50'],
             'description' => ['required', 'max:255'],

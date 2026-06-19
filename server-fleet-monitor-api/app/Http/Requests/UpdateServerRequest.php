@@ -24,7 +24,7 @@ class UpdateServerRequest extends FormRequest
     {
         return [
             'hostname' => ['sometimes', 'max:255'],
-            'ip_address' => ['sometimes'],
+            'ip_address' => ['sometimes', 'ip'],
             'environment' => ['sometimes', 'max:50'],
             'os_type' => ['sometimes', 'max:50'],
             'description' => ['sometimes', 'max:255'],

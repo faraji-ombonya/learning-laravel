@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServerRequest;
 use App\Http\Requests\UpdateServerRequest;
 use App\Models\Server;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class ServerController extends Controller
@@ -15,17 +14,11 @@ class ServerController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = min($request->input("per_page", 15), 60);
-        $status = $request->input("status");
-        $environment = $request->input("environment");
-
-        return Server::when($status, function ($query, string $status) {
-                $query->where('status', $status);
-            })
-            ->when($environment, function ($query, string $environment) {
-                $query->where('environment', $environment);
-            })
-            ->paginate($perPage)->toResourceCollection();
+        return Server::query()
+            ->when($request->query("status"), fn($q, string $v) => $q->where('status', $v))
+            ->when($request->query("environment"), fn($q, string $v) => $q->where('environment', $v))
+            ->paginate(min($request->query("per_page", 15), 60))
+            ->toResourceCollection();
     }
 
     /**

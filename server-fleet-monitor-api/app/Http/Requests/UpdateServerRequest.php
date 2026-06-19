@@ -12,7 +12,7 @@ class UpdateServerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +23,11 @@ class UpdateServerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'hostname' => ['sometimes', 'max:255'],
+            'ip_address' => ['sometimes'],
+            'environment' => ['sometimes', 'max:50'],
+            'os_type' => ['sometimes', 'max:50'],
+            'description' => ['sometimes', 'max:255'],
         ];
     }
 }

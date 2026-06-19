@@ -32,15 +32,7 @@ class ServerController extends Controller
      */
     public function show(Server $server)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Server $server)
-    {
-        //
+        return new ServerResource($server);
     }
 
     /**
@@ -48,7 +40,8 @@ class ServerController extends Controller
      */
     public function update(UpdateServerRequest $request, Server $server)
     {
-        //
+        $server->updateOrFail($request->validated());
+        return new ServerResource($server);
     }
 
     /**
@@ -56,6 +49,7 @@ class ServerController extends Controller
      */
     public function destroy(Server $server)
     {
-        //
+        $server->delete();
+        return response(status: 204);
     }
 }

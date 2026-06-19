@@ -18,4 +18,8 @@ class Server extends Model
         'description',
         'status',
     ];
+
+    protected $attributes = [
+        'status' => 'unreachable',
+    ];
 }

@@ -10,5 +10,5 @@ Route::prefix('v1/')->group(function () {
         return $request->user();
     })->middleware('auth:sanctum');
 
-    Route::resource('/servers', ServerController::class);
+    Route::apiResource('/servers', ServerController::class);
 });

@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\OSType;
+use App\Enums\ServerEnvironment;
+use App\Enums\ServerStatus;
+
 
 class Server extends Model
 {
@@ -22,4 +26,13 @@ class Server extends Model
     protected $attributes = [
         'status' => 'unreachable',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'os_type' => OSType::class,
+            'status' => ServerStatus::class,
+            'environment' => ServerEnvironment::class,
+        ];
+    }
 }
